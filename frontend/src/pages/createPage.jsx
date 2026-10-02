@@ -131,7 +131,7 @@ const CreatePage = () => {
                     onClick={handleRemoveAttachment}
                     disabled={!anexo}
                 >
-                    <Trash className="text-gray-600" />
+                    <Trash className={`size-5 ${!anexo ? "text-gray-400" : "text-gray-700"}`} />
                 </button>
 
                 <button

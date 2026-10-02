@@ -62,10 +62,9 @@ export const analisarPdf = async (req, res) => {
       Telefone: telefone,
     });
   } catch (error) {
-    console.error("Erro ao analisar PDF:", error);
-
     return res.status(500).json({
-      message: "Não foi possível ler o PDF.",
+      message: "Erro ao analisar PDF:",
+      error: error.message,
     });
   }
 };

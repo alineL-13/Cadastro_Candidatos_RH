@@ -1,5 +1,5 @@
 import express from "express";
-import { getCandidatos, createCandidato, getCandidatoById } from "../controllers/candidatosController.js";
+import { getCandidatos, createCandidato, getCandidatoById, deleteCandidato } from "../controllers/candidatosController.js";
 
 const router = express.Router();
 
@@ -7,5 +7,6 @@ const router = express.Router();
 router.get("/", getCandidatos);
 router.post("/", createCandidato);
 router.get("/:id", getCandidatoById);
+router.delete("/:id", deleteCandidato);
 
 export default router;

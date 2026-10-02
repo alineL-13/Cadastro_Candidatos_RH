@@ -8,7 +8,7 @@ export async function getCandidatos(req, res) {
       SELECT *
       FROM Candidatos
     `);
-    res.json(result.recordset);
+    res.status(200).json(result.recordset);
   } catch (error) {
     res
       .status(500)
@@ -122,11 +122,27 @@ export async function getCandidatoById(req, res) {
                 WHERE ID = @ID
             `
         );
-        return res.json(result.recordset[0]);
+        return res.status(200).json(result.recordset[0]);
     } catch (error) {
         return res.status(500).json({
             message: "Erro ao buscar candidato",
             error: error.message
         });
+    }
+}
+
+export async function deleteCandidato(req, res) {
+    try {
+        const db = getDatabase();
+        const result = await db.request()
+        .input("ID", sql.Int, req.params.id)
+        .query(`
+        DELETE FROM
+        Candidatos 
+        WHERE ID = @ID
+        `);
+        return res.status(200).json({ message: "Candidato deletado com sucesso." });
+    } catch (error) {
+        return res.status(500).json({ message: "Erro: ", error: error.message });
     }
 }
