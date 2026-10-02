@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Trash } from "lucide-react";
 import toast from "react-hot-toast";
-
 import api from "../lib/axios";
 import { formatDate } from "../lib/utils";
 
@@ -16,9 +15,40 @@ function CandidateDetails() {
   const [deleting, setDeleting] = useState(false);
 
   const handleDelete = async () => {
-    const confirmado = window.confirm(
-      `Deseja realmente excluir ${candidato.NomeCompleto}?`
-    );
+    const confirmado = await new Promise((resolve) => {
+      toast((t) => (
+        <div className="flex flex-col gap-3">
+          <div>
+            Excluir <strong>{candidato.NomeCompleto}</strong>?
+          </div>
+
+          <div className="flex justify-center gap-2">
+            <button
+              onClick={() => {
+                toast.dismiss(t.id);
+                resolve(true);
+              }}
+              className="btn btn-sm btn-error"
+            >
+              Excluir
+            </button>
+
+            <button
+              onClick={() => {
+                toast.dismiss(t.id);
+                resolve(false);
+              }}
+              className="btn btn-sm btn-ghost"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      ), {
+        autoClose: false,
+        closeOnClick: false,
+      });
+    });
 
     if (!confirmado) return;
 
@@ -31,13 +61,13 @@ function CandidateDetails() {
       navigate("/");
     } catch (error) {
       toast.error(
-        error.response?.data?.message ||
-          "Erro ao excluir candidato."
+        error.response?.data?.message || "Erro ao excluir candidato."
       );
     } finally {
       setDeleting(false);
     }
   };
+
 
   useEffect(() => {
     async function buscarCandidato() {
