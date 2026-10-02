@@ -44,7 +44,7 @@ function CandidateDetails() {
             </h1>
 
             <p className="text-base-content/60 mt-1">
-              Candidato cadastrado em{" "}
+              Cadastrado em{" "}
               {formatDate(new Date(candidato.DataCriacao))}
             </p>
           </div>

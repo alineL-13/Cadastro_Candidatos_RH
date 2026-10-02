@@ -12,7 +12,8 @@ const CreatePage = () => {
   const [CargoDesejado, setCargoDesejado] = useState("");
   const [ResumoProfissional, setResumoProfissional] = useState("");
   const [anexo, setAnexo] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loadingFormulario, setLoadingFormulario] = useState(false);
+  const [loadingAnexo, setLoadingAnexo] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ const CreatePage = () => {
       return;
     }
 
-    setLoading(true);
+    setLoadingFormulario(true);
 
     try {
       await api.post("/candidatos", {
@@ -43,14 +44,39 @@ const CreatePage = () => {
         error.response?.data?.message || "Erro ao criar candidato."
       );
     } finally {
-      setLoading(false);
+      setLoadingFormulario(false);
     }
   };
 
-  const handleAnalyzeAttachment = () => {
+  const handleAnalyzeAttachment = async () => {
     if (!anexo) {
       toast.error("Selecione um arquivo PDF primeiro.");
       return;
+    }
+
+    setLoadingAnexo(true);
+
+    try {
+      console.log("1. Iniciando análise");
+
+      const formData = new FormData();
+      formData.append("arquivo", anexo);
+
+      console.log("2. Enviando requisição para o backend");
+
+      const response = await api.post("/pdf/analisar", formData);
+
+      console.log("3. Resposta recebida:", response.data);
+      
+      setNomeCompleto(response.data.NomeCompleto || "");
+      setEmail(response.data.Email || "");
+      setTelefone(response.data.Telefone || "");
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || "Erro ao analisar o PDF."
+      );
+    } finally {
+      setLoadingAnexo(false);
     }
   };
 
@@ -60,7 +86,7 @@ const CreatePage = () => {
 };
 
   return (
-    <main className="w-full max-w-6xl mx-auto px-4 py-4 md:px-6">
+    <main className="w-full max-w-6xl mx-auto px-4 pt-4 md:px-6">
       <div className="card bg-base-200/50 border border-base-300 shadow-md">
         <div className="card-body p-5 md:p-6">
           <h1 className="text-2xl font-bold">
@@ -73,7 +99,7 @@ const CreatePage = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             
-            {/* Anexo primeiro */}
+            {/* Anexo */}
             <section className="rounded-lg border border-base-300 p-4">
             <h2 className="font-semibold mb-3">
                 Currículo em PDF
@@ -85,9 +111,18 @@ const CreatePage = () => {
                 type="file"
                 accept=".pdf"
                 className="file-input file-input-bordered w-full lg:flex-1"
-                onChange={(e) =>
-                    setAnexo(e.target.files?.[0] || null)
-                }
+                onChange={(e) => {
+                    const arquivo = e.target.files?.[0] || null;
+                    
+                    if (arquivo.size > 5 * 1024 * 1024) {
+                        toast.error("O arquivo deve ter no máximo 5 MB.");
+                        setAnexo(null);
+                        e.target.value = "";
+                        return;
+                    }
+
+                    setAnexo(arquivo);
+                }}
                 />
 
                 <button
@@ -103,9 +138,15 @@ const CreatePage = () => {
                 type="button"
                 className="btn btn-outline btn-secondary"
                 onClick={handleAnalyzeAttachment}
-                disabled={!anexo}
-                >
-                Analisar anexo
+                disabled={!anexo || loadingAnexo}>
+                {loadingAnexo ? (
+                  <>
+                    <span className="loading loading-spinner loading-sm" />
+                    Analisando...
+                  </>
+                ) : (
+                  "Analisar anexo"
+                )}
                 </button>
             </div>
             </section>
@@ -212,9 +253,9 @@ const CreatePage = () => {
               <button
                 type="submit"
                 className="btn btn-primary w-full sm:w-auto"
-                disabled={loading}
+                disabled={loadingFormulario}
               >
-                {loading ? (
+                {loadingFormulario ? (
                   <>
                     <span className="loading loading-spinner loading-sm" />
                     Cadastrando...

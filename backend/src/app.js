@@ -3,6 +3,7 @@ import { connectDatabase } from "./database.js";
 import candidatosRoutes from "./routes/candidatosRoutes.js";
 import dotenv from "dotenv";
 import cors from "cors";
+import pdfRoutes from "./routes/pdfRoutes.js";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/candidatos", candidatosRoutes);
+app.use("/pdf", pdfRoutes);
 
 async function start() {
   try {

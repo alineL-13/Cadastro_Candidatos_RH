@@ -16,7 +16,9 @@
     "express": "^5.2.1",
     "msnodesqlv8": "^5.5.0",
     "mssql": "^12.7.2",
-    "odbc": "^2.6.0"
+    "multer": "^2.4.0",
+    "odbc": "^2.6.0",
+    "pdf-parse": "^1.1.1"
   },
   "type": "module",
   "devDependencies": {
