@@ -27,6 +27,7 @@ const CandidatesList = () => {
   return (
     <div className="min-h-screen">
       <div className="max-w-7xl mx-auto p-4 mt-6">
+
         {loading && (
           <div className="text-center text-secondary py-10">
             Carregando candidatos...
@@ -41,11 +42,20 @@ const CandidatesList = () => {
 
         {candidatos.length > 0 && !loading && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {candidatos.map(candidato => (
-              <CardCandidato key={candidato.ID} candidato={candidato} />
-            ))}
+            {[...candidatos]
+              .sort(
+                (a, b) =>
+                  new Date(b.DataCriacao) - new Date(a.DataCriacao)
+              )
+              .map(candidato => (
+                <CardCandidato
+                  key={candidato.ID}
+                  candidato={candidato}
+                />
+              ))}
           </div>
         )}
+
       </div>
     </div>
   )
