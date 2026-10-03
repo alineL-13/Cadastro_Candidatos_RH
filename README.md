@@ -1,4 +1,4 @@
-# TalentHub — Cadastro de Candidatos
+# TalentHub - Cadastro de Candidatos
 
 Aplicação web para cadastro e consulta de candidatos, desenvolvida como teste técnico. O TalentHub permite registrar candidatos manualmente ou utilizar um currículo em PDF para preencher automaticamente os campos de Nome, Email e Telefone.
 
@@ -65,7 +65,6 @@ Antes de executar a aplicação, instale:
 - SQL Server ou acesso a uma instância compatível.
 - SQL Server Management Studio (SSMS) ou ferramenta equivalente.
 - ODBC Driver 18 for SQL Server, conforme a configuração do ambiente.
-- Git.
 
 ## Configuração do banco de dados
 
@@ -149,7 +148,6 @@ Para conferir os caminhos exatos e os formatos das requisições, consulte os ar
 - O PDF é opcional: não anexar um arquivo não impede o cadastro manual.
 - O envio de arquivo aceita PDF de até 5 MB.
 - A extração depende do texto disponível no documento. PDFs digitalizados como imagem, documentos protegidos, layouts incomuns ou informações organizadas de forma inesperada podem não ser interpretados corretamente.
-- A identificação automática não substitui a revisão humana. Os dados extraídos devem ser conferidos antes de salvar.
 - O currículo é usado para análise, o sistema não armazena o PDF no banco de dados.
 
 ## Testes
