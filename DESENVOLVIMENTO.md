@@ -1,4 +1,4 @@
-# Registro de Desenvolvimento — TalentHub
+# Registro de Desenvolvimento - TalentHub
 
 Este documento registra o processo de desenvolvimento do TalentHub, aplicação de cadastro e consulta de candidatos construída para um teste técnico.
 
@@ -12,6 +12,7 @@ O trabalho foi organizado em etapas para transformar os requisitos do desafio em
 4. **Frontend:** desenvolvimento da interface em React, com formulário compartilhado pelos fluxos manual, listagem e tela de detalhes.
 5. **Integração:** conexão do frontend com a API por Axios e apresentação de mensagens de retorno para o usuário.
 6. **Análise de PDF:** criação do fluxo de recebimento do arquivo no backend, extração do texto e tentativa de identificar nome, e-mail e telefone.
+7. **Melhorias e funções extras:** Implementação da função de deletar funcionários, com validação com o usuário.
 
 A aplicação foi dividida em `frontend` e `backend`, mantendo separadas a interface e a API. O script `script.sql`, na raiz do repositório, permite criar a estrutura inicial do banco.
 
@@ -47,7 +48,7 @@ A extração não foi tratada como garantia de reconhecimento: os currículos va
 - **dotenv:** configuração por variáveis de ambiente.
 - **cors:** configuração de comunicação entre origens durante o desenvolvimento.
 
-### Exclusão como funcionalidade adicional
+### Funcionalidades adicionais
 
 A exclusão de candidatos não estava entre os requisitos explícitos do desafio. Foi incluída como funcionalidade complementar para oferecer maior autonomia na manutenção dos registros. Ela não substitui nem altera os fluxos obrigatórios de cadastro e consulta.
 
@@ -55,7 +56,7 @@ Além disso, implementei a validação do formato do telefone como uma melhoria 
 
 ## 3. Uso de inteligência artificial
 
-Durante o desenvolvimento, utilizei o ChatGPT e o GitHub Copilot como apoio para compreender os requisitos, esclarecer dúvidas de implementação e revisar trechos de código. A IA foi usada como ferramenta de apoio, as sugestões precisaram ser avaliadas e adaptadas ao projeto.
+Durante o desenvolvimento, utilizei o ChatGPT e o GitHub Copilot como apoio para compreender os requisitos, esclarecer dúvidas de implementação e revisar trechos de código. A IA foi usada como ferramenta de apoio e as sugestões foram avaliadas antes de comporem o projeto.
 
 Exemplos de solicitações feitas durante o trabalho:
 
@@ -115,8 +116,8 @@ Com mais tempo, eu priorizaria:
 
 1. **Testes automatizados:** adicionar testes unitários para validações e extração, testes de integração para os endpoints com Supertest e testes de interface para os principais fluxos.
 2. **Extração de PDF mais robusta:** ampliar os casos de teste com currículos de formatos variados e melhorar a identificação de campos sem impedir a edição manual.
-3. **Segurança e privacidade:** revisar limites de requisição, mensagens de erro, configurações de produção e políticas de acesso aos dados pessoais dos candidatos.
-4. **Experiência de uso:** avaliar busca, filtros, paginação, e edição de registros.
+3. **Experiência de uso:** avaliar busca, filtros, paginação, e edição de registros.
+4. **Segurança e privacidade:** revisar limites de requisição, mensagens de erro, configurações de produção e políticas de acesso aos dados pessoais dos candidatos.
 
 ## 9. Considerações finais
 
