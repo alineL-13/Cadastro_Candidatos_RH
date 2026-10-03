@@ -18,7 +18,6 @@ export const upload = multer({
 });
 
 export const analisarPdf = async (req, res) => {
-    console.log("Arquivo recebido:");
   try {
     if (!req.file) {
       return res.status(400).json({
